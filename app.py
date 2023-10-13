@@ -8,7 +8,7 @@ import pandas as pd
 import datetime as dt
 
 
-
+print("hola")
 app = dash.Dash(
     __name__,
     meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
@@ -18,14 +18,21 @@ app.title = "Dashboard energia"
 server = app.server
 app.config.suppress_callback_exceptions = True
 
+path= r'C:\Users\juanm\OneDrive\Documentos\MIAD\SEMESTRE 3\ciclo 6\desplieggue\semana 1\datos_energia.csv'
 
-# Load data from csv
-def load_data():
-    # To do: Completar la función 
-    
+def load_data(csv_path):
+    # Lee el archivo CSV en un DataFrame de pandas
+    df = pd.read_csv(csv_path)
+    df['time'] = pd.to_datetime(df['time'], format='%Y-%m-%d %H:%M:%S')
+    df.set_index('time',inplace=True)
+    return df
 
 # Cargar datos
-data = load_data()
+data = load_data(path)
+
+
+# Cargar datos
+data = load_data(path)
 
 # Graficar serie
 def plot_series(data, initial_date, proy):
